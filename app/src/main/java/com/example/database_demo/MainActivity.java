@@ -24,7 +24,6 @@ public class MainActivity extends AppCompatActivity {
     ArrayList numberArray= new ArrayList();
     ArrayList nameArray= new ArrayList();
 
-    int cnt=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,10 +36,7 @@ public class MainActivity extends AppCompatActivity {
         Cursor cursor=mydbhelper.showall();
         while(cursor.moveToNext()){
             nameArray.add(cursor.getString(1));
-            System.out.println("name aray======="+nameArray.get(cnt));
             numberArray.add(cursor.getString(2));
-            System.out.println("number aray======="+numberArray.get(cnt));
-            cnt++;
         }
         adapter adapter= new adapter(MainActivity.this,nameArray,numberArray);
         recyclerView.setAdapter(adapter);
@@ -56,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
             update= dialog.findViewById(R.id.update);
             delete= dialog.findViewById(R.id.delete);
 
+
+
             update.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -64,9 +62,12 @@ public class MainActivity extends AppCompatActivity {
                     number=etnumber.getText().toString();
                     mydbhelper.updatedata(1,name,number);
                     dialog.dismiss();
-
                 }
             });
+
+
+
+
             add.setOnClickListener(k -> {
                 String name,number;
                 name=etname.getText().toString();
@@ -89,15 +90,12 @@ public class MainActivity extends AppCompatActivity {
 
             });
             dialog.show();
-            getdata();
         });
 
 
 
-    }
-
-    public void getdata(){
-
 
     }
+
+
 }

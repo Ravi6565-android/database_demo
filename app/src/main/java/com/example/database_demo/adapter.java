@@ -1,6 +1,9 @@
 package com.example.database_demo;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +43,32 @@ public class adapter extends RecyclerView.Adapter<adapter.viewholder> {
 
         holder.name.setText(nameArray.get(position).toString());
         System.out.println("number aray======="+numberArray.get(position));
+
+        holder.name.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                AlertDialog.Builder builder= new AlertDialog.Builder(context);
+                builder.setTitle("DELETE");
+                builder.setMessage("Are you sure you want to delete this contact");
+                builder.setNegativeButton("no",(dialog, which) -> {
+                    builder.setCancelable(true);
+
+                });
+                builder.setPositiveButton("DELETE", (dialog, which) -> {
+                    mydbhelper mydbhelper= new mydbhelper(context);
+                    mydbhelper.deletdata(position);
+
+                    notifyDataSetChanged();
+                });
+                builder.show();
+
+
+
+
+                return true;
+            }
+
+        });
 
     }
 

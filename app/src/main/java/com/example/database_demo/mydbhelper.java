@@ -29,7 +29,7 @@ public class mydbhelper extends SQLiteOpenHelper {
 
     public void deletdata(int id) {
         SQLiteDatabase database=getWritableDatabase();
-        database.execSQL("delete from contacts where id='"+id+"'");
+        database.execSQL(" delete from contacts where id = "+id+" ");
     }
 
     public Cursor showall() {
