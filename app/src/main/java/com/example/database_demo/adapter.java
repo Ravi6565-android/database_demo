@@ -1,9 +1,7 @@
 package com.example.database_demo;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,12 +15,10 @@ import java.util.ArrayList;
 public class adapter extends RecyclerView.Adapter<adapter.viewholder> {
 
     Context context;
-    ArrayList nameArray;
-    ArrayList numberArray;
-    public adapter(Context context, ArrayList nameArray, ArrayList numberArray) {
+    ArrayList<data_manage> datas;
+    public adapter(Context context, ArrayList datas) {
         this.context=context;
-        this.nameArray= nameArray;
-        this.numberArray=numberArray;
+        this.datas=datas;
     }
 
     @NonNull
@@ -38,11 +34,9 @@ public class adapter extends RecyclerView.Adapter<adapter.viewholder> {
     @Override
     public void onBindViewHolder(@NonNull adapter.viewholder holder, int position) {
 
-        holder.number.setText( numberArray.get(position).toString());
-        System.out.println("name aray======="+nameArray.get(position));
+        holder.number.setText( datas.get(position).number);
 
-        holder.name.setText(nameArray.get(position).toString());
-        System.out.println("number aray======="+numberArray.get(position));
+        holder.name.setText(datas.get(position).name);
 
         holder.name.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -56,7 +50,7 @@ public class adapter extends RecyclerView.Adapter<adapter.viewholder> {
                 });
                 builder.setPositiveButton("DELETE", (dialog, which) -> {
                     mydbhelper mydbhelper= new mydbhelper(context);
-                    mydbhelper.deletdata(position);
+                    mydbhelper.deletdata(datas.get(position).id);
 
                     notifyDataSetChanged();
                 });
@@ -74,7 +68,7 @@ public class adapter extends RecyclerView.Adapter<adapter.viewholder> {
 
     @Override
     public int getItemCount() {
-        return nameArray.size();
+        return datas.size();
     }
 
     public class viewholder extends RecyclerView.ViewHolder {

@@ -21,8 +21,7 @@ public class MainActivity extends AppCompatActivity {
     Button add,update,delete;
     RecyclerView recyclerView;
     FloatingActionButton fab;
-    ArrayList numberArray= new ArrayList();
-    ArrayList nameArray= new ArrayList();
+   ArrayList<data_manage> datas=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,10 +34,15 @@ public class MainActivity extends AppCompatActivity {
         mydbhelper mydbhelper= new mydbhelper(MainActivity.this);
         Cursor cursor=mydbhelper.showall();
         while(cursor.moveToNext()){
-            nameArray.add(cursor.getString(1));
-            numberArray.add(cursor.getString(2));
+            data_manage manage= new data_manage();
+            manage.setId(cursor.getInt(0));
+            manage.setName(cursor.getString(0));
+            manage.setNumber(cursor.getString(0));
+            datas.add(manage);
+
+
         }
-        adapter adapter= new adapter(MainActivity.this,nameArray,numberArray);
+        adapter adapter= new adapter(MainActivity.this,datas);
         recyclerView.setAdapter(adapter);
 
         fab.setOnClickListener(v -> {
@@ -74,19 +78,16 @@ public class MainActivity extends AppCompatActivity {
                 number=etnumber.getText().toString();
                 mydbhelper.adddata(name,number);
                 Cursor curs = mydbhelper.showall();
+                datas.clear();
                 while(curs.moveToNext()){
-                    nameArray.add(curs.getString(1));
-                    numberArray.add(curs.getString(2));
+                    data_manage manage= new data_manage();
+                    manage.setId(curs.getInt(0));
+                    manage.setName(curs.getString(1));
+                    manage.setNumber(curs.getString(2));
+                    datas.add(manage);
                 }
                 recyclerView.setAdapter(adapter);
                 dialog.dismiss();
-                // mydbhelper.deletdata(id);
-                //  Cursor cursor=mydbhelper.showall();
-//            while(cursor.moveToNext()){
-//                System.out.println("id"+cursor.getInt(0));
-//                System.out.println("name"+cursor.getString(1));
-//                System.out.println("number"+cursor.getString(2));
-//            }
 
             });
             dialog.show();
