@@ -5,6 +5,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -63,7 +65,12 @@ public class adapter extends RecyclerView.Adapter<adapter.viewholder> {
             }
 
         });
+holder.more.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
 
+    }
+});
     }
 
     @Override
@@ -73,10 +80,12 @@ public class adapter extends RecyclerView.Adapter<adapter.viewholder> {
 
     public class viewholder extends RecyclerView.ViewHolder {
         TextView name,number;
+        ImageButton more;
         public viewholder(@NonNull View itemView) {
             super(itemView);
             name=itemView.findViewById(R.id.re_name);
             number=itemView.findViewById(R.id.re_number);
+            more=itemView.findViewById(R.id.more);
         }
     }
 }
