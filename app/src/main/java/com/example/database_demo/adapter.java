@@ -55,8 +55,8 @@ public class adapter extends RecyclerView.Adapter<adapter.viewholder> {
                     mydbhelper mydbhelper= new mydbhelper(context);
                     mydbhelper.deletdata(datas.get(position).id);
                     datas.remove(position);
+                  notifyDataSetChanged();
 
-                    notifyDataSetChanged();
                 });
                 builder.show();
 
@@ -79,6 +79,7 @@ holder.more.setOnClickListener(new View.OnClickListener() {
                         mydbhelper mydbhelper= new mydbhelper(context);
                         mydbhelper.deletdata(datas.get(position).id);
                         datas.remove(position);
+                        notifyDataSetChanged();
                }
                     return true;
                 }

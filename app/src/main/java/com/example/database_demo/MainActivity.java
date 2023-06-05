@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     FloatingActionButton fab;
    ArrayList<data_manage> datas=new ArrayList<>();
+     Cursor cursor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,16 +35,9 @@ public class MainActivity extends AppCompatActivity {
 
 
         mydbhelper mydbhelper= new mydbhelper(MainActivity.this);
-        Cursor cursor=mydbhelper.showall();
-        while(cursor.moveToNext()){
-            data_manage manage= new data_manage();
-            manage.setId(cursor.getInt(0));
-            manage.setName(cursor.getString(1));
-            manage.setNumber(cursor.getString(2));
-            datas.add(manage);
+         cursor=mydbhelper.showall();
+        show(cursor);
 
-
-        }
         adapter adapter= new adapter(MainActivity.this,datas);
         recyclerView.setAdapter(adapter);
 
@@ -55,22 +49,6 @@ public class MainActivity extends AppCompatActivity {
             etname= dialog.findViewById(R.id.etname);
             etnumber= dialog.findViewById(R.id.etnumber);
             add= dialog.findViewById(R.id.add);
-            update= dialog.findViewById(R.id.update);
-            delete= dialog.findViewById(R.id.delete);
-
-
-
-            update.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String name,number;
-                    name=etname.getText().toString();
-                    number=etnumber.getText().toString();
-                    mydbhelper.updatedata(1,name,number);
-                    dialog.dismiss();
-                }
-            });
-
 
 
 
@@ -81,13 +59,7 @@ public class MainActivity extends AppCompatActivity {
                 mydbhelper.adddata(name,number);
                 Cursor curs = mydbhelper.showall();
                 datas.clear();
-                while(curs.moveToNext()){
-                    data_manage manage= new data_manage();
-                    manage.setId(curs.getInt(0));
-                    manage.setName(curs.getString(1));
-                    manage.setNumber(curs.getString(2));
-                    datas.add(manage);
-                }
+               show(curs);
                 recyclerView.setAdapter(adapter);
                 dialog.dismiss();
 
@@ -98,6 +70,17 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    }
+    public void show(Cursor cursor){
+        while(cursor.moveToNext()){
+            data_manage manage= new data_manage();
+            manage.setId(cursor.getInt(0));
+            manage.setName(cursor.getString(1));
+            manage.setNumber(cursor.getString(2));
+            datas.add(manage);
+
+
+        }
     }
 
 
