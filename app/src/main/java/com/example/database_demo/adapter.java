@@ -3,6 +3,7 @@ package com.example.database_demo;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -53,6 +54,7 @@ public class adapter extends RecyclerView.Adapter<adapter.viewholder> {
                 builder.setPositiveButton("DELETE", (dialog, which) -> {
                     mydbhelper mydbhelper= new mydbhelper(context);
                     mydbhelper.deletdata(datas.get(position).id);
+                    datas.remove(position);
 
                     notifyDataSetChanged();
                 });
@@ -66,9 +68,22 @@ public class adapter extends RecyclerView.Adapter<adapter.viewholder> {
 
         });
 holder.more.setOnClickListener(new View.OnClickListener() {
-    @Override
+     @Override
     public void onClick(View view) {
-
+            PopupMenu popupMenu= new PopupMenu(context,holder.more);
+            popupMenu.getMenuInflater().inflate(R.menu.pop_menu, popupMenu.getMenu());
+            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    if(item.getItemId()==R.id.m_delete){
+                        mydbhelper mydbhelper= new mydbhelper(context);
+                        mydbhelper.deletdata(datas.get(position).id);
+                        datas.remove(position);
+               }
+                    return true;
+                }
+            });
+            popupMenu.show();
     }
 });
     }

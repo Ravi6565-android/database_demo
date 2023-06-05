@@ -31,13 +31,15 @@ public class MainActivity extends AppCompatActivity {
         recyclerView=findViewById(R.id.recyler);
         LinearLayoutManager manager= new LinearLayoutManager(MainActivity.this);
         recyclerView.setLayoutManager(manager);
+
+
         mydbhelper mydbhelper= new mydbhelper(MainActivity.this);
         Cursor cursor=mydbhelper.showall();
         while(cursor.moveToNext()){
             data_manage manage= new data_manage();
             manage.setId(cursor.getInt(0));
-            manage.setName(cursor.getString(0));
-            manage.setNumber(cursor.getString(0));
+            manage.setName(cursor.getString(1));
+            manage.setNumber(cursor.getString(2));
             datas.add(manage);
 
 
