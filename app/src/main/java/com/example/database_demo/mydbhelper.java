@@ -44,7 +44,7 @@ public class mydbhelper extends SQLiteOpenHelper {
 
         SQLiteDatabase database=getWritableDatabase();
 
-
-        database.execSQL("update into contacts set name='"+name+"',number='"+number+"'where id="+id+"");
+String qur=" update contacts set name='"+name+"',number='"+number+"'where id="+id+" ";
+        database.execSQL(qur);
     }
 }

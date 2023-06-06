@@ -1,11 +1,14 @@
 package com.example.database_demo;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -81,6 +84,34 @@ holder.more.setOnClickListener(new View.OnClickListener() {
                         datas.remove(position);
                         notifyDataSetChanged();
                }
+                    if(item.getItemId()==R.id.m_update){
+                        mydbhelper mydbhelper= new mydbhelper(context);
+                        Dialog dialog= new Dialog(context);
+                        dialog.setContentView(R.layout.edit_activity);
+                        EditText name,number;
+                        Button add;
+                        name=dialog.findViewById(R.id.etname);
+                        number=dialog.findViewById(R.id.etnumber);
+                        add=dialog.findViewById(R.id.add);
+                        add.setOnClickListener(v -> {
+                            String sname,snumber;
+                            sname=name.getText().toString();
+                            snumber=number.getText().toString();
+                            data_manage manage= new data_manage();
+                            manage.setId(position);
+                            manage.setName(sname);
+                            manage.setNumber(snumber);
+                            mydbhelper.updatedata(datas.get(position).id,sname,snumber);
+                            datas.remove(position) ;
+                            datas.add(position,manage);
+
+                            notifyDataSetChanged();
+                            dialog.dismiss();
+                        });
+
+                        dialog.show();
+                    }
+
                     return true;
                 }
             });
